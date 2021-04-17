@@ -1,0 +1,165 @@
+package bank;
+import java.util.Scanner;
+class bank
+{
+	double balance;
+    String name;
+	 String address;
+	 long no;
+	 String type;
+	 bank()
+	 {
+		 balance=0;
+		 name=null;
+		 no=0;
+		 address=null;
+		 type=null;
+	 }
+	bank(double balance,String name,String address,int no,String type)
+	{
+		this.balance = balance;
+		this.name=name;
+		this.no=no;
+		this.address=address;
+		this.type=type;
+	}
+	public void getdata()
+	{   
+		
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Enter the name of account holder ");
+        name = scanner.nextLine();
+        System.out.println("Enter the account no");
+        no = scanner.nextLong();
+        scanner.nextLine();
+        System.out.println("Enter the account type");
+        type = scanner.nextLine();
+        System.out.println("Enter the balance of account");
+        balance = scanner.nextDouble();
+        scanner.nextLine();
+        check(type);
+        System.out.println("Enter the address of account holder");
+        address = scanner.nextLine();
+        
+	}
+	
+	public void withdraw(int amount)
+	{
+		balance = balance - amount;
+	}
+	public void deposit(int amount)
+	{
+		balance = balance + amount;
+	}
+	public double getbalance()
+	{
+		return balance;
+	}
+	public void change(String name)
+	{
+		this.name=name;
+	}
+	
+	
+	public String toString(){
+		return "Name: "+this.name+"\n"+"Account type:"+this.type+"\n"+"Account no: "+this.no+"\n"+"Balance: "+this.balance+"\n"+"Address: "+this.address+"\n";
+	}
+	public static void main (String args[])
+	{  
+		Scanner scan = new Scanner(System.in);
+		bank b[]= new bank[10];
+		b[0]=new bank(10000,"abc","ab-10",1,"saving");
+		int choice=0,i=1;
+		long j;
+		while(choice!=7)
+		{
+			System.out.println("\nEnter your choice");
+		    System.out.println("1.Create\n2.Change name\n3.Withdraw Amount\n4.Deposit Amount\n5.Balance\n6.Summary\n7.Exit");
+		    choice = scan.nextInt();
+		    scan.nextLine();
+		   switch(choice)
+		{
+		  case 1 :  b[i]=new bank();
+			         b[i].getdata();
+			         if(b[i].type.equals("current"))
+			 		{
+			 			while(b[i].balance<=20000)
+			 			{
+			 				System.out.println("Low Balance!");
+			 				System.out.println("Want to enter some money?(yes/no)");
+			 				String c = scan.nextLine();
+			 				if(c.equalsIgnoreCase("yes"))
+			 				{ System.out.println("Want to enter some money?");
+			 				  int amount = scan.nextInt();
+			 				  b[i].deposit(amount);
+			 			    }
+			 			}
+			 		}
+		            i++;
+			        break;
+			        
+		  case 2 : 	System.out.println("Enter the account no whose name you want to change");
+		             j =scan.nextLong();
+		             scan.nextLine();
+		             for(int k=0;k<i;k++)
+		             {	 
+		               if(j==b[k].no)
+		             {
+		            	System.out.println("Enter new name for account holder");
+		            	String s=scan.nextLine();
+		            	b[k].change(s);
+		              } 
+		            
+		             }
+		                break;
+		  
+		  case 3 : System.out.println("Enter the account no for withdrawl of money");
+		           j = scan.nextLong();
+		           for(int k=0;k<i;k++)
+		           {          if(j==b[k].no)
+		             {
+		        	   System.out.println("Enter the amount to be withdrawn");
+		        	   int amount=scan.nextInt();
+		        	   b[k].withdraw(amount);
+		             }
+		            }
+		           
+		        	   break;
+		  case 4 : System.out.println("Enter the account no for deposit of money");
+                       j = scan.nextInt();
+                       scan.nextLine();
+                     for(int k=0;k<i;k++)
+                     {   if(j==1)
+                      {
+       	                System.out.println("Enter the amount to be deposited");
+       	                int amount=scan.nextInt();
+       	                  b[k].deposit(amount);
+                      }
+                     }
+       	                 break;
+		  case 5 : System.out.println("Enter the account no to see balance");
+		            j= scan.nextInt();
+		            for(int k=0;k<i;k++)
+		            { if(j==b[k].no)
+		             {
+		            	double balance= b[k].getbalance();
+		            	System.out.println("Balance of account is : "+balance);	
+		             }
+		            }
+		            break;
+		  case 6 :   for(int k=0;k<i;k++)
+		           {
+	                      System.out.println(b[k]);		  
+		            }
+		              break;
+ 		  case 7 :  break;
+ 		  default: System.out.println("Enter valid option!!!");
+ 		           break;
+		}
+		
+	
+		}
+		scan.close();
+	}
+
+}
